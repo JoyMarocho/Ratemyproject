@@ -10,3 +10,10 @@ class TestProjectClass(TestCase):
         self.assertTrue(isinstance(self.new_project,Project))
 
 
+class TestRatingClass(TestCase):
+    def setUp(self):
+        self.new_rating = Rating(design = 8, usability = 9, content = 8)
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.new_rating,Rating))
+
