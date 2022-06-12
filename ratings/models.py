@@ -30,3 +30,11 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse('homepage')
+
+class Rating(models.Model):
+    design = models.IntegerField(default=0)
+    usability = models.IntegerField(default=0)
+    content = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.id)
