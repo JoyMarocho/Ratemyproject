@@ -109,3 +109,16 @@ def get(self,request,format=None):
     profile_details = Profile.objects.all()
     serializers = ProfileSerializer(profile_details, many=True)
     return Response(serializers.data)
+
+class ProjectCreateView(LoginRequiredMixin,CreateView):
+        form_class = UploadProjectForm
+        template_name = 'new_project.html'
+
+def form_valid(self, form):
+    form.instance.username = self.request.user
+    return super().form_valid(form)
+
+
+class ProjectListView(ListView):
+    model = Project
+    template_name = 'index.html'
