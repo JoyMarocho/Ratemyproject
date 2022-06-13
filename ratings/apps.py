@@ -6,4 +6,4 @@ class RatingsConfig(AppConfig):
     name = 'ratings'
 
     def ready(self):
-        import ratings.signals
+        import ratings.signals 
