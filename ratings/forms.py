@@ -20,4 +20,9 @@ class NewUserForm(UserCreationForm):
             user.save()
         return user
 
+class UpdateUserForm(forms.ModelForm):
+
+        class Meta:
+            model = User
+            fields = ['username', 'email']
 
