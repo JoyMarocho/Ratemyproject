@@ -1,0 +1,59 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light" href="{% url 'homepage' %}">Rate-My-Project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="fas fa-home text-light" style="margin-left:100%; font-size:15px" aria-current="page" href="{% url 'homepage' %}"></a>
+                </li>
+            </ul>
+
+            <form  style="margin-left:5%;" role="search" action="">
+                <div class="input-group-sm">
+                <input class="form-control-sm"  type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-secondary btn-sm" style="margin-left:-6px" id="button-addon2" type="submit">Search</button>
+                </div>
+            </form>
+
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="fas fa-upload nav-link text-light" style="margin-left:30px" aria-current="page" href="{% url 'project_add' %}"></a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">Submit Your Projects
+                <a class="fas fa-user-circle nav-link text-light" aria-current="page" href="{% url 'profileupdate' %}"></a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %} 
+                <li class="nav-item">
+                <a class="fas fa-sign-out-alt nav-link text-light" href="/logout"></a>
+                </li>
+                {% else %} 
+                <li class="nav-item">
+                <a class="nav-link text-light" href="/login">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            </div>
+        </div>
+        </nav>
+    </body>
+    </html>
