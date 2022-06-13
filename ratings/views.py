@@ -57,3 +57,9 @@ def logout_user(request):
     logout(request)
     messages.info(request, f'You have successfully logged out.')
     return redirect('login')
+
+@login_required
+def profile(request):
+    # user = User.objects.get()
+    # user.save()
+    return render(request,'profile/profile.html')
