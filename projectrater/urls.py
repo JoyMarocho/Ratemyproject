@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import re_path as url,include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.authtoken.views import obtain_auth_token
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'', include('ratings.urls')),
-    url('api-auth/', include('rest_framework.urls'))
+    url('api-auth/', include('rest_framework.urls')),
+    url(r'tinymce/', include('tinymce.urls')),
+
 ]
