@@ -81,3 +81,19 @@ def update_profile(request):
         user_form = UpdateUserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
     return render(request,'profile/update_profile.html',{"profile_form":profile_form, "user_form": user_form, "prolife_form":profile_form})
+
+class ListProjects(APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+        # authentication_classes = [authentication.TokenAuthentication]
+        # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Project.objects.all()
+
+def get(self,request,format=None):
+    all_projects = Project.objects.all()
+    serializers = ProjectSerializer(all_projects, many=True)
+    return Response(serializers.data)
