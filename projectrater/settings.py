@@ -21,6 +21,11 @@ import cloudinary.api
 import django_heroku
 import dj_database_url
 
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = True
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -53,6 +58,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'rest_framework',
     'rest_framework.authtoken',
+    # 'pyuploadcare.dj',
+
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -64,6 +71,19 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+# # cloudinary configurations
+
+cloudinary.config( 
+    cloud_name = 'marocho',
+    api_key = '188969527952778', 
+    api_secret = 'E0KbLWpJXr-TCLV687wFUlmI4J4'
+)  
+
+# UPLOADCARE = {
+#     'pub_key': 'f56a396fec151b7fc2a2',
+#     'secret': 'aedd694e414f6f5c8e89',
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,14 +132,6 @@ DATABASES = {
     }
 }
 
-# cloudinary configurations
-
-cloudinary.config( 
-    cloud_name = 'marocho',
-    api_key = '188969527952778', 
-    api_secret = 'E0KbLWpJXr-TCLV687wFUlmI4J4'
-)  
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -154,6 +166,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -167,6 +182,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+LOGIN_REDIRECT_URL = 'index'
+
+LOGOUT_REDIRECT_URL = 'index'
 
 # Email configurations remember to install python-decouple
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
@@ -185,3 +203,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+django_heroku.settings(locals())

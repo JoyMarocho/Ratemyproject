@@ -1,13 +1,14 @@
-from django.db.models import fields
-from django.forms.models import model_to_dict
-from ratings.models import Profile,Project
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from ratings.models import Profile,Project,Rating
+from django.db.models import fields
+from django.forms.models import model_to_dict
+from django.forms import ImageField
 
 #Your forms here
 class NewUserForm(UserCreationForm):
-    email = forms.EmailField()
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
     class Meta:
         model = User
@@ -21,6 +22,7 @@ class NewUserForm(UserCreationForm):
         return user
 
 class UpdateUserForm(forms.ModelForm):
+        email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
 
         class Meta:
             model = User
@@ -30,7 +32,7 @@ class ProfileForm(forms.ModelForm):
 
         class Meta:
             model = Profile
-            fields = ('profile_picture','user','bio','location','occupation')
+            fields = ('name','profile_picture','user','bio','location','occupation')
 
 class UploadProjectForm(forms.ModelForm):
 
@@ -38,3 +40,7 @@ class UploadProjectForm(forms.ModelForm):
             model = Project
             fields = ('title','image','description','link','rating')
 
+class RatingsForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['design', 'usability', 'content']
