@@ -15,6 +15,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.contrib.messages.views import SuccessMessageMixin
+import json
 
 # Create your views here.
 def index(request):
@@ -23,16 +24,15 @@ def index(request):
 
 
 def register_user(request):
-    if request.method == "POST":
         form = NewUserForm(request.POST)
-    if form.is_valid():
-        user = form.save()
-        login(request, user)
-        messages.success(request, f'Registration Successful.')
-        return redirect('homepage')
-    messages.error(request, f'Unsuccessful registration. Invalid information.')
-    form = NewUserForm()
-    return render(request, 'registration/registration_form.html', {"registration_form": form})
+        if request.method == "POST" and  form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, f'Registration Successful.')
+            return redirect('homepage')
+        messages.error(request, f'Unsuccessful registration. Invalid information.')
+        form = NewUserForm()
+        return render(request, 'registration/registration_form.html', {"registration_form": form})
 
 def login_user(request):
     if request.method == 'POST':
@@ -95,28 +95,28 @@ class ListProjects(APIView):
         # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Project.objects.all()
 
-def get(self,request,format=None):
-    all_projects = Project.objects.all()
-    serializers = ProjectSerializer(all_projects, many=True)
-    return Response(serializers.data)
+    def get(self, request, format=None):
+        all_projects = Project.objects.all()
+        serializers = ProjectSerializer(all_projects, many=True)
+        return Response(serializers.data)
 
 class ListUserProfile(APIView):
         # authentication_classes = [authentication.TokenAuthentication]
         # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Profile.objects.all()
 
-def get(self,request,format=None):
-    profile_details = Profile.objects.all()
-    serializers = ProfileSerializer(profile_details, many=True)
-    return Response(serializers.data)
+    def get(self,request, format=None):
+        profile_details = Profile.objects.all()
+        serializers = ProfileSerializer(profile_details, many=True)
+        return Response(serializers.data)
 
 class ProjectCreateView(LoginRequiredMixin,CreateView):
         form_class = UploadProjectForm
         template_name = 'new_project.html'
 
 def form_valid(self, form):
-    form.instance.username = self.request.user
-    return super().form_valid(form)
+        form.instance.username = self.request.user
+        return super().form_valid(form)
 
 
 class ProjectListView(ListView):
