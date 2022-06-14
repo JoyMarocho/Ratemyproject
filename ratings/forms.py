@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from ratings.models import Profile,Project,Rating
+from ratings.models import Post, Profile,Project,Rating,Post
 from django.db.models import fields
 from django.forms.models import model_to_dict
 from django.forms import ImageField
@@ -44,3 +44,10 @@ class RatingsForm(forms.ModelForm):
     class Meta:
         model = Rating
         fields = ['design', 'usability', 'content']
+
+class PostForm(forms.ModelForm):
+    photo = ImageField(label='')
+
+    class Meta:
+        model = Post
+        fields = ('photo', 'title', 'url', 'description', 'technologies',)

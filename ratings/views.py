@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import NewUserForm, ProfileForm,UploadProjectForm,UpdateUserForm,RatingsForm
+from .forms import NewUserForm, ProfileForm,UploadProjectForm,UpdateUserForm,RatingsForm,PostForm
 from rest_framework import authentication,permissions,serializers,viewsets
 from .models import Project,Profile,Rating,Post
 from .serializer import ProfileSerializer,ProjectSerializer,UserSerializer,PostSerializer
@@ -41,6 +41,7 @@ def index(request):
 
     # message = "Welcome to Rate-My-Project"
     # return render(request,'index.html',{"message": message})
+
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -57,16 +58,16 @@ class PostViewSet(viewsets.ModelViewSet):
     
 
 def register_user(request):
-    if request.method == 'POST':
-        form = NewUserForm(request.POST)
-        if form.is_valid():
+    form = NewUserForm(request.POST)
+    if request.method == 'POST' and form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('index')
-        else:
+            return redirect('homepage')
+    else:
+            messages.error(request, f'Unsuccessful registration. Invalid information.')
             form = NewUserForm()
     return render(request, 'registration/registration_form.html', {'registration_form': form})
 
