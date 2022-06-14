@@ -1,1 +1,0 @@
-web: gunicorn projectrater.wsgi 
