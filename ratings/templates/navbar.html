@@ -1,59 +1,46 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand text-light" href="{% url 'homepage' %}">Rate-My-Project</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+{% load crispy_forms_tags %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar" id="nbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}"> <strong class="mr-4 brand"> Awwards</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                <a class="fas fa-home text-light" style="margin-left:100%; font-size:15px" aria-current="page" href="{% url 'homepage' %}"></a>
-                </li>
-            </ul>
-
-            <form  style="margin-left:5%;" role="search" action="">
-                <div class="input-group-sm">
-                <input class="form-control-sm"  type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-secondary btn-sm" style="margin-left:-6px" id="button-addon2" type="submit">Search</button>
-                </div>
-            </form>
-
-
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                <a class="fas fa-upload nav-link text-light" style="margin-left:30px" aria-current="page" href="{% url 'project_add' %}"></a>
-                </li>
-            </ul>
-
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">Submit Your Projects
-                <a class="fas fa-user-circle nav-link text-light" aria-current="page" href="{% url 'profileupdate' %}"></a>
-                </li>
-            </ul>
-
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                {% if user.is_authenticated %} 
-                <li class="nav-item">
-                <a class="fas fa-sign-out-alt nav-link text-light" href="/logout"></a>
+                <li class="nav-item active">
+                    <form class="form-inline" method="get" action="{% url 'search' %}">
+                        {% csrf_token %}
+                        <div class="md-form my-0">
+                            <input class="form-control mr-sm-2 " type="text" placeholder="Search" name="title" aria-label="Search">
+                        </div>
+                    </form>
                 </li>
-                {% else %} 
-                <li class="nav-item">
-                <a class="nav-link text-light" href="/login">Login</a>
-                </li>
-                {% endif %}
             </ul>
 
-            </div>
+            <ul class="navbar-nav navbar-right">
+                {% if user.is_authenticated%}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.username|title }} <img class="rounded-circle nav-img" src="{{ user.profile.profile_picture.url }}" alt="">
+                                                                            
+                    </a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item text-center" href="{% url 'profile' user.username %}"> Profile </a>
+                        <hr>
+                        <a class="dropdown-item text-center" href="{% url 'edit' user.username  %}"> Edit profile </a>
+                        <hr>
+                        <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item"> Log Out </a>
+
+
+                    </div>
+                </li>
+                {% else %}
+                <a href="{% url 'login' %}" class="login btn btn-sm btn-info"> REGISTER/LOGIN </a>
+                {% endif %}
+                <button class="btn btn-info btn-sm" id="site" data-toggle="modal" data-target=".bd-example-modal-xl">
+                    Submit your site
+                </button>
+            </ul>
         </div>
-        </nav>
-    </body>
-    </html>
+    </div>
+</nav>
