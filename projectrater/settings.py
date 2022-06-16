@@ -48,13 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ratings.apps.RatingsConfig',
-    'cloudinary',
     'bootstrap5',
     'crispy_forms',
     'crispy_bootstrap5',
     'rest_framework',
     'rest_framework.authtoken',
-    # 'pyuploadcare.dj',
+    'pyuploadcare.dj',
+        # 'cloudinary',
+
 
 ]
 
@@ -70,16 +71,16 @@ REST_FRAMEWORK = {
 
 # # cloudinary configurations
 
-cloudinary.config( 
-    cloud_name = 'marocho',
-    api_key = '188969527952778', 
-    api_secret = 'E0KbLWpJXr-TCLV687wFUlmI4J4'
-)  
+# cloudinary.config( 
+#     cloud_name = 'marocho',
+#     api_key = '188969527952778', 
+#     api_secret = 'E0KbLWpJXr-TCLV687wFUlmI4J4'
+# )  
 
-# UPLOADCARE = {
-#     'pub_key': 'f56a396fec151b7fc2a2',
-#     'secret': 'aedd694e414f6f5c8e89',
-# }
+UPLOADCARE = {
+    'pub_key': 'f56a396fec151b7fc2a2',
+    'secret': 'aedd694e414f6f5c8e89',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -213,7 +214,7 @@ EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
-CLOUDINARY_URL = environ.get('CLOUDINARY_URL')
+# CLOUDINARY_URL = environ.get('CLOUDINARY_URL')
 
 
 REST_FRAMEWORK = {

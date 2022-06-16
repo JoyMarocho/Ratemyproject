@@ -1,14 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Project,Profile,Post
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Project
-        fields = ('title','image','description','link')
-
+from .models import Profile, Post
 
 class ProfileSerializer(serializers.ModelSerializer):
     
